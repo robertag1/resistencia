@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/IncidnciadeDaninhasResistentes_1.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-44.58736059479553,-89.54460966542749],[19.412639405204434,0.031598513011083185]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        function pop_IncidnciadeDaninhasResistentes_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Especie</strong><br />' + (feature.properties['Especie'] !== null ? autolinker.link(feature.properties['Especie'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Latitude</strong><br />' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Longitude</strong><br />' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['N° RMA'] !== null ? autolinker.link(feature.properties['N° RMA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>RMA</strong><br />' + (feature.properties['RMA'] !== null ? autolinker.link(feature.properties['RMA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>MA</strong><br />' + (feature.properties['MA'] !== null ? autolinker.link(feature.properties['MA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['N° RGQ'] !== null ? autolinker.link(feature.properties['N° RGQ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>RGQ</strong><br />' + (feature.properties['RGQ'] !== null ? autolinker.link(feature.properties['RGQ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>GQ</strong><br />' + (feature.properties['GQ'] !== null ? autolinker.link(feature.properties['GQ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['N° Herbi'] !== null ? autolinker.link(feature.properties['N° Herbi'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>RHerb</strong><br />' + (feature.properties['RHerb'] !== null ? autolinker.link(feature.properties['RHerb'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Herbicidas</strong><br />' + (feature.properties['Herbicidas'] !== null ? autolinker.link(feature.properties['Herbicidas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_IncidnciadeDaninhasResistentes_1_0() {
+            return {
+                pane: 'pane_IncidnciadeDaninhasResistentes_1',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/blue-marker.svg',
+            iconSize: [32.68, 32.68]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_IncidnciadeDaninhasResistentes_1');
+        map.getPane('pane_IncidnciadeDaninhasResistentes_1').style.zIndex = 401;
+        map.getPane('pane_IncidnciadeDaninhasResistentes_1').style['mix-blend-mode'] = 'normal';
+        var layer_IncidnciadeDaninhasResistentes_1 = new L.geoJson(json_IncidnciadeDaninhasResistentes_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_IncidnciadeDaninhasResistentes_1',
+            layerName: 'layer_IncidnciadeDaninhasResistentes_1',
+            pane: 'pane_IncidnciadeDaninhasResistentes_1',
+            onEachFeature: pop_IncidnciadeDaninhasResistentes_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_IncidnciadeDaninhasResistentes_1_0(feature));
+            },
+        });
+        var cluster_IncidnciadeDaninhasResistentes_1 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2});
+        cluster_IncidnciadeDaninhasResistentes_1.addLayer(layer_IncidnciadeDaninhasResistentes_1);
+
+        bounds_group.addLayer(layer_IncidnciadeDaninhasResistentes_1);
+        cluster_IncidnciadeDaninhasResistentes_1.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/IncidnciadeDaninhasResistentes_1.png" /> Incidência de Daninhas Resistentes': cluster_IncidnciadeDaninhasResistentes_1,"OSM Standard": layer_OSMStandard_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"RMA": "str","RHerb": "str","RGQ": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_RMA = document.createElement('div');
+            div_RMA.id = "div_RMA";
+            div_RMA.className= "filterselect";
+            document.getElementById("menu").appendChild(div_RMA);
+            sel_RMA = document.createElement('select');
+            sel_RMA.multiple = true;
+            sel_RMA.size = 1;
+            sel_RMA.id = "sel_RMA";
+            var RMA_options_str = "<option value='' unselected></option>";
+            sel_RMA.onchange = function(){filterFunc()};
+            RMA_options_str  += '<option value="Resistência Multipla">Resistência Multipla</option>';
+            sel_RMA.innerHTML = RMA_options_str;
+            div_RMA.appendChild(sel_RMA);
+            var lab_RMA = document.createElement('div');
+            lab_RMA.innerHTML = 'RMA';
+            lab_RMA.className = 'filterlabel';
+            div_RMA.appendChild(lab_RMA);
+            var reset_RMA = document.createElement('div');
+            reset_RMA.innerHTML = 'clear filter';
+            reset_RMA.className = 'filterlabel';
+            reset_RMA.onclick = function() {
+                var options = document.getElementById("sel_RMA").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_RMA.appendChild(reset_RMA);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_RHerb = document.createElement('div');
+            div_RHerb.id = "div_RHerb";
+            div_RHerb.className= "filterselect";
+            document.getElementById("menu").appendChild(div_RHerb);
+            sel_RHerb = document.createElement('select');
+            sel_RHerb.multiple = true;
+            sel_RHerb.size = 3;
+            sel_RHerb.id = "sel_RHerb";
+            var RHerb_options_str = "<option value='' unselected></option>";
+            sel_RHerb.onchange = function(){filterFunc()};
+            RHerb_options_str  += '<option value="Resistente">Resistente</option>';
+            RHerb_options_str  += '<option value="Resistência Multipla">Resistência Multipla</option>';
+            RHerb_options_str  += '<option value="Resistência Simples">Resistência Simples</option>';
+            sel_RHerb.innerHTML = RHerb_options_str;
+            div_RHerb.appendChild(sel_RHerb);
+            var lab_RHerb = document.createElement('div');
+            lab_RHerb.innerHTML = 'RHerb';
+            lab_RHerb.className = 'filterlabel';
+            div_RHerb.appendChild(lab_RHerb);
+            var reset_RHerb = document.createElement('div');
+            reset_RHerb.innerHTML = 'clear filter';
+            reset_RHerb.className = 'filterlabel';
+            reset_RHerb.onclick = function() {
+                var options = document.getElementById("sel_RHerb").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_RHerb.appendChild(reset_RHerb);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_RGQ = document.createElement('div');
+            div_RGQ.id = "div_RGQ";
+            div_RGQ.className= "filterselect";
+            document.getElementById("menu").appendChild(div_RGQ);
+            sel_RGQ = document.createElement('select');
+            sel_RGQ.multiple = true;
+            sel_RGQ.size = 3;
+            sel_RGQ.id = "sel_RGQ";
+            var RGQ_options_str = "<option value='' unselected></option>";
+            sel_RGQ.onchange = function(){filterFunc()};
+            RGQ_options_str  += '<option value="Resistente">Resistente</option>';
+            RGQ_options_str  += '<option value="Resistência Multipla">Resistência Multipla</option>';
+            RGQ_options_str  += '<option value="Resistência Simples">Resistência Simples</option>';
+            sel_RGQ.innerHTML = RGQ_options_str;
+            div_RGQ.appendChild(sel_RGQ);
+            var lab_RGQ = document.createElement('div');
+            lab_RGQ.innerHTML = 'RGQ';
+            lab_RGQ.className = 'filterlabel';
+            div_RGQ.appendChild(lab_RGQ);
+            var reset_RGQ = document.createElement('div');
+            reset_RGQ.innerHTML = 'clear filter';
+            reset_RGQ.className = 'filterlabel';
+            reset_RGQ.onclick = function() {
+                var options = document.getElementById("sel_RGQ").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_RGQ.appendChild(reset_RGQ);
+        </script>
+    </body>
+</html>
